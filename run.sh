@@ -158,5 +158,5 @@ docker stop $container_name
 
 
 
-
-
+# 批量删除容器
+for i in $(docker ps -a --filter "name=javascript" -q); do dk rm -f $i; done 
