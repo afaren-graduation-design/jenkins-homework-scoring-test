@@ -132,31 +132,20 @@ cat /tmp/result_detail_$BUILD_NUMBER
 docker stop $container_name
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # 批量删除容器
 for i in $(docker ps -a --filter "name=javascript" -q); do dk rm -f $i; done 
+
+
+# refactor constants to uppercase
+CONTAINER="${stack}_${BUILD_NUMBER}"
+SCRIPT="evaluate-script-${BUILD_NUMBER}.sh"
+IMAGE='node:5.8'
+
+echo $script > $SCRIPT    # save script content to file
+
+docker run --name $CONTAINER --detach $IMAGE /bin/bash -xc "tail -f /dev/null"
+docker cp . $CONTAINER:/var # copy directory
+docker exec -i $CONTAINER bash -c "cd /var && chmod +x $SCRIPT &&./$SCRIPT" > /tmp/result_detail_$BUILD_NUMBER 2>&1
+
+docker rm --force $CONTAINER
+
