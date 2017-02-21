@@ -14,7 +14,7 @@ const callback_url = 'http://10.205.125.183:3000/scoring/999'
 
 const script = `
 #! /usr/bash 
-node hello.js
+node ./hello.js
 `.toString().split('\n').join('\\n');
 
 
@@ -27,7 +27,7 @@ var info = {
 };
 
 
-const taskApi = 'http://local.thoughtworks.school:8088/job/HOMEWORK_SCORING/buildWithParameters'
+const taskApi = 'http://local.thoughtworks.school:8080/job/HOMEWORK_SCORING/buildWithParameters'
 
 function done(err, res){
 	console.log(err);
