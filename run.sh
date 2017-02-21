@@ -85,12 +85,12 @@ IMAGE='node:5.8'
 
 docker run --name $container_name --detach $IMAGE /bin/bash -xc "tail -f /dev/null"
 
-docker exec $container_name mkdir -p "/opt/workspace"
-docker cp . $container_name:/opt/workspace # copy directory
+docker exec $container_name mkdir -p "/var"
+docker cp . $container_name:/var # copy directory
 
-docker exec -i $container_name ls -l "/opt/workspace/"
-docker exec -i $container_name chmod +x "/opt/workspace/$script_name"
-docker exec -i $container_name "/opt/workspace/$script_name > /tmp/result_detail_$BUILD_NUMBER 2>&1"
+docker exec -i $container_name ls -l "/var/"
+docker exec -i $container_name chmod +x "/var/$script_name"
+docker exec -i $container_name "/var/$script_name > /tmp/result_detail_$BUILD_NUMBER 2>&1"
 docker cp  $container_name:/tmp/result_detail_$BUILD_NUMBER  /tmp/result_detail_$BUILD_NUMBER
 
 
@@ -106,7 +106,30 @@ docker stop $container_name
 
 
 
+#----------
 
+container_name="${stack}_${BUILD_NUMBER}"
+script_name="evaluate-script-${BUILD_NUMBER}.sh"
+
+echo $script > $script_name
+chmod +x $script_name
+
+IMAGE='node:5.8'
+
+docker run --name $container_name --detach $IMAGE /bin/bash -xc "tail -f /dev/null"
+
+docker exec $container_name mkdir -p /var
+docker cp . $container_name:/var # copy directory
+
+docker exec -i $container_name chmod +x /var/$script_name
+
+docker exec -i $container_name sh -c "cd /var; ./$script_name" > /tmp/result_detail_$BUILD_NUMBER 2>&1
+
+         
+
+cat /tmp/result_detail_$BUILD_NUMBER
+
+docker stop $container_name
 
 
 
