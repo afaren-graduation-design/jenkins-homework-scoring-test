@@ -2,18 +2,20 @@
 
 var request = require('superagent');
 
-const script = `
-#! /usr/bash 
-echo '==================================================in script==========================================='
-`.toString().split('\n').join('\\n');
+
+const stack = 'javascript'
 
 const options = {
-	userAnswerRepo: 'https://github.com/Afaren/for-recruiting-system-homework-quiz-test.git',
+	userAnswerRepo: 'https://github.com/Afaren/for-recruiting-system-homework-test.git',
 	branch: 'master'
 }
 
 const callback_url = 'http://10.205.125.183:3000/scoring/999'
-const stack = 'python'
+
+const script = `
+#! /usr/bash 
+node hello.js
+`.toString().split('\n').join('\\n');
 
 
 var info = {

@@ -11,19 +11,11 @@ app.get('/', (req, res) => {
 	res.send('multi-tech-stack');
 });
 
-app.get('/scoring', (req, res)=> {
-	console.log('GET /scoring');
-    res.send(req.query.name);
-});
-
-
-app.post('/scoring', (req, res)=> {
-	console.log('POST /scoring');
-	res.send(req.get('name'));
-});
 
 app.put('/scoring/:id', (req, res)=> {
 	console.log('PUT /scoring/:id');
+	req.body.result = new Buffer(req.body.result || '', 'base64').toString('utf8');
+	console.log(JSON.stringify(req.body,null, 2));
 	res.send(req.body.name);
 });
 
