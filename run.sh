@@ -149,3 +149,7 @@ docker exec -i $CONTAINER bash -c "cd /var && chmod +x $SCRIPT &&./$SCRIPT" > /t
 
 docker rm --force $CONTAINER
 
+
+
+# ADD_IMAGE 这样处理的话，就可以正确报错，并且把所有的信息都导入到 message 中
+docker pull $image > /tmp/result_detail_$BUILD_NUMBER 2>&1 

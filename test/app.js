@@ -14,7 +14,7 @@ app.get('/', (req, res) => {
 
 app.put('/scoring/:id', (req, res)=> {
 	console.log('PUT /scoring/:id');
-	req.body.result = new Buffer(req.body.result || '', 'base64').toString('utf8');
+	req.body.message = new Buffer(req.body.message || '', 'base64').toString('utf8');
 	console.log(JSON.stringify(req.body,null, 2));
 	res.send(req.body.name);
 });
